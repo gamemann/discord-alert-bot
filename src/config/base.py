@@ -41,7 +41,7 @@ class alert_settings():
     def __init__(self):
         self.timezone: str = 'America/Los_Angeles'
         self.snooze_time: int = 1800 
-        self.times: list[str] = ["07:00", "14:00", "18:00", "20:00"]
+        self.times: list[str] = ["08:00",]
         self.max_snoozes: int = 10
 
         self.alert_msg = "{m} Timer up {n}!!!"
