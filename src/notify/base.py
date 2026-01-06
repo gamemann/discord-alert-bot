@@ -43,12 +43,12 @@ class Notis():
     async def init_notis(self):
         timezone = self.timezone
 
-        schedule.every(5).seconds.do(lambda: asyncio.create_task(self.alert_user()))
+        #schedule.every(5).seconds.do(lambda: asyncio.create_task(self.alert_user()))
 
-        #for t in self.times:
-            #print(f"Scheduling notification at {t} ({timezone})...")
+        for t in self.times:
+            print(f"Scheduling notification at {t} ({timezone})...")
 
-            #schedule.every().day.at(t, timezone).do(lambda: asyncio.create_task(self.alert_user()))
+            schedule.every().day.at(t, timezone).do(lambda: asyncio.create_task(self.alert_user()))
 
     async def check_notis(self):
         while True:
