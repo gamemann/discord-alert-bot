@@ -1,4 +1,5 @@
 import asyncio
+import base64
 import math
 import discord
 import schedule
@@ -46,7 +47,7 @@ class Notis():
         #schedule.every(5).seconds.do(lambda: asyncio.create_task(self.alert_user()))
 
         for t in self.times:
-            print(f"Scheduling notification at {t} ({timezone})...")
+            debug_msg(self.cfg, 2, f"Scheduling notification at {t} ({timezone})...")
 
             schedule.every().day.at(t, timezone).do(lambda: asyncio.create_task(self.alert_user()))
 
@@ -94,6 +95,15 @@ class Notis():
 
         # Add message ID to list.
         self.msgs.append(msg)
+
+        # Check for auto emoji.
+        first_emoji = cfg.Bot.first_emoji
+
+        if first_emoji is not None and first_emoji.strip() != "":
+            try:
+                await msg.add_reaction(first_emoji)
+            except Exception as e:
+                debug_msg(cfg, 1, f"Error adding auto-reaction to message ID {msg.id}: {e}")
 
         if self.is_checking and not self.first_run:
                 debug_msg(self.cfg, 1, "WARNING: Notification sent, but check already in progress...")
@@ -159,12 +169,12 @@ class Notis():
                 for reaction in msg.reactions:
                     debug_msg(cfg, 3, f"Checking users for reaction {reaction.emoji}...\n")
 
+                    found = False
+
                     async for rUsr in reaction.users():
                         # Exclude bot.
                         if rUsr == self.bot.user:
                             continue
-
-                        found = False
 
                         if rUsr == user:
                             debug_msg(cfg, 1, f"{user.name} has acknowledged the alert!")

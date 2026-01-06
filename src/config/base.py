@@ -30,7 +30,7 @@ class bot_settings():
         self.channel_id: str = None
         self.user_id: str = None
 
-        self.first_emoji = 'alarm_clock'
+        self.first_emoji = '⏰'
         
     def as_json(self):
         return {
