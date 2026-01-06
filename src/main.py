@@ -60,7 +60,7 @@ async def main():
     except Exception as e:
         raise RuntimeError("Failed to initialize or run the bot.") from e
     
-    print("Discord bot connected...")
+    debug_msg(cfg, 1, "Discord bot connected...")
 
     alert_settings = cfg.Alert
 
@@ -68,12 +68,12 @@ async def main():
     notis = Notis(bot=bot, cfg=cfg)
 
     # Create jobs.
-    print("Creating notification jobs...")
+    debug_msg(cfg, 2, "Creating notification jobs...")
 
     await notis.init_notis()
 
     # Start checking for notifications to send.
-    print("Checking for notifications...")
+    debug_msg(cfg, 2, "Checking for notifications...")
 
     try:
         await notis.check_notis()
@@ -84,7 +84,7 @@ async def main():
     except Exception as e:
         raise RuntimeError("Failed during notification checking.") from e
 
-    print(f"\nBot exiting...")
+    debug_msg(cfg, 1, "Bot exiting...")
 
 if __name__ == '__main__':
     asyncio.run(main())

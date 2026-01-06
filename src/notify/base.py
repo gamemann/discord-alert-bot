@@ -160,6 +160,10 @@ class Notis():
                     debug_msg(cfg, 3, f"Checking users for reaction {reaction.emoji}...\n")
 
                     async for rUsr in reaction.users():
+                        # Exclude bot.
+                        if rUsr == self.bot.user:
+                            continue
+
                         found = False
 
                         if rUsr == user:

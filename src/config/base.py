@@ -29,19 +29,22 @@ class bot_settings():
         self.token: str = None
         self.channel_id: str = None
         self.user_id: str = None
+
+        self.first_emoji = 'alarm_clock'
         
     def as_json(self):
         return {
             "token": self.token,
             "channel_id": self.channel_id,
-            "user_id": self.user_id
+            "user_id": self.user_id,
+            "first_emoji": self.first_emoji
         }
 
 class alert_settings():
     def __init__(self):
         self.timezone: str = 'America/Los_Angeles'
         self.snooze_time: int = 1800 
-        self.times: list[str] = ["08:00",]
+        self.times: list[str] = ["08:00"]
         self.max_snoozes: int = 10
 
         self.alert_msg = "{m} Timer up {n}!!!"
@@ -112,6 +115,8 @@ class Config():
             self.Bot.channel_id = bot.get("channel_id", self.Bot.channel_id)
             self.Bot.user_id = bot.get("user_id", self.Bot.user_id)
 
+            self.Bot.first_emoji = bot.get("first_emoji", self.Bot.first_emoji)
+
         # Alert settings.
         if "alert" in data:
             alert = data["alert"]
@@ -153,6 +158,7 @@ class Config():
         print(f"\t\tToken => {self.Bot.token}")
         print(f"\t\tChannel ID => {self.Bot.channel_id}")
         print(f"\t\tUser ID => {self.Bot.user_id}")
+        print(f"\t\tFirst Emoji => {self.Bot.first_emoji}")
 
         # Alert settings
         print(f"\tAlerts")
